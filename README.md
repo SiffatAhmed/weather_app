@@ -40,7 +40,7 @@ This project is a starting point for a Flutter application that fetches and disp
    1. Create a `.env` file in the root directory of the project.
    2. Add your API key and other environment variables to the `.env` file:
       ```env
-      API_KEY=OPENWEATHER_API_KEY
+      OPENWEATHER_API_KEY=OPENWEATHER_API_KEY
       ```
 
    ### Flutter Version
