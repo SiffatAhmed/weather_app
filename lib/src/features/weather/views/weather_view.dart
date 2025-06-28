@@ -71,11 +71,25 @@ class _WeatherViewState extends State<WeatherView> {
                     onSearch: () {
                       BlocProvider.of<WeatherBloc>(context).add(FetchWeatherEvent(cityName: searchController.text));
                     },
+                    borderRadius: 80,
                     showIcon: true,
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.3,
+                  CurrentWeatherCard(data: widget.data),
+                  SizedBox(height: 10.h),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * 0.25,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
                     child: GoogleMap(
                       mapType: MapType.hybrid,
                       initialCameraPosition: pin!,
@@ -86,14 +100,12 @@ class _WeatherViewState extends State<WeatherView> {
                       },
                       markers: {
                         Marker(
-                          markerId: const MarkerId('1'),
+                          markerId: MarkerId(UniqueKey().toString()),
                           position: LatLng(widget.data.lat, widget.data.lon),
                         )
                       },
                     ),
                   ),
-                  SizedBox(height: 10.h),
-                  CurrentWeatherCard(data: widget.data),
                   widget.data.hourly.isNotEmpty
                       ? SizedBox(
                           height: 220.h,

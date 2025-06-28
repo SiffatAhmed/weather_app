@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/src/core/shared/globals.dart';
+import 'package:weather_app/src/core/shared/shared_services.dart';
 import 'package:weather_app/src/features/weather/models/weather_model.dart';
 import 'package:weather_icons/weather_icons.dart';
 
@@ -13,34 +14,44 @@ class CurrentWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Today's forecast",
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-        ),
-        Card(
-          elevation: 5,
-          child: Padding(
-            padding: cardPadding,
-            child: Row(
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: cardPadding,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                SharedServices().formattedDate(),
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+                Row(
                   children: [
                     WeatherPoint(
-                      icon: WeatherIcons.thermometer,
-                      text: "Temperature: ${(data.current.temp - 273.15).toInt()} °C",
+                      icon: null,
+                      text: "${(data.current.temp - 273.15).toInt()} °C",
                     ),
-                    const SizedBox(height: 8),
+                    const Spacer(),
+                    WeatherStatusWithIcon(
+                        weatherTitle: data.current.weather[0].main, weatherIcon: data.current.weather[0].icon, precipitation: "Precipitation: ${data.current.clouds / 100}%"),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
                     WeatherPoint(
                       icon: WeatherIcons.humidity,
                       text: "Humidity: ${data.current.humidity}",
                     ),
+                    const Spacer(),
                     const SizedBox(height: 8),
                     WeatherPoint(
                       icon: WeatherIcons.wind_direction,
@@ -48,14 +59,16 @@ class CurrentWeatherCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(),
-                WeatherStatusWithIcon(
-                    weatherTitle: data.current.weather[0].main, weatherIcon: data.current.weather[0].icon, precipitation: "Precipitation: ${data.current.clouds / 100}%"),
+                const SizedBox(height: 8),
+                WeatherPoint(
+                  icon: WeatherIcons.rain,
+                  text: "Precipitation: ${data.current.clouds / 100}%",
+                ),
               ],
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -77,18 +90,16 @@ class WeatherStatusWithIcon extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Text(
-            weatherTitle,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-          const SizedBox(height: 8),
           Image.network(
             "http://openweathermap.org/img/wn/$weatherIcon.png",
+            height: 80,
+            width: 80,
             loadingBuilder: (context, child, loadingProgress) => loadingProgress == null ? child : const CircularProgressIndicator(),
             errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
           ),
+          const SizedBox(height: 8),
           Text(
-            precipitation,
+            weatherTitle,
             style: Theme.of(context).textTheme.labelLarge,
           ),
         ],
@@ -105,16 +116,16 @@ class WeatherPoint extends StatelessWidget {
   });
 
   final String text;
-  final IconData icon;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon),
+        if (icon != null) ...[Icon(icon), const SizedBox(width: 8)],
         Text(
           text,
-          style: Theme.of(context).textTheme.labelLarge,
+          style: icon == null ? Theme.of(context).textTheme.displayMedium : Theme.of(context).textTheme.labelLarge,
         ),
       ],
     );

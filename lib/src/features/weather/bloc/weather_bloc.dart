@@ -31,22 +31,18 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         locationPermission = await FlLocation.checkLocationPermission();
         if (locationPermission == LocationPermission.denied || locationPermission == LocationPermission.deniedForever) {
           locationPermission = await FlLocation.requestLocationPermission();
-          log("Location permission: $locationPermission");
           position = Location.fromJson(defaultPosition);
         }
 
         if (locationPermission == LocationPermission.always || locationPermission == LocationPermission.whileInUse) {
           try {
-            log("got to location");
             if (await FlLocation.isLocationServicesEnabled) {
               var res = await FlLocation.getLocation();
               position = res;
             } else {
-              log("Invalid location data, using default coordinates");
               position = Location.fromJson(defaultPosition);
             }
           } catch (e) {
-            log("Error getting location: $e");
             position = Location.fromJson(defaultPosition);
           }
         } else {
@@ -60,7 +56,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         emit(WeatherLoaded(weatherResponse));
       }
     } catch (e) {
-      print("Error fetching weather: $e");
       emit(WeatherError(e.toString()));
     }
   }
