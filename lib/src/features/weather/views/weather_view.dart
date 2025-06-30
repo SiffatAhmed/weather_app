@@ -108,7 +108,7 @@ class _WeatherViewState extends State<WeatherView> {
                   ),
                   widget.data.hourly.isNotEmpty
                       ? SizedBox(
-                          height: 220.h,
+                          height: 160.h,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -122,9 +122,10 @@ class _WeatherViewState extends State<WeatherView> {
                               ),
                               SizedBox(height: 10.h),
                               Expanded(
-                                child: ListView.builder(
+                                child: ListView.separated(
+                                  separatorBuilder: (context, index) => SizedBox(width: 10.w),
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: widget.data.hourly.length,
+                                  itemCount: widget.data.hourly.take(12).length,
                                   itemBuilder: (context, index) {
                                     return HourlyWeatherCard(hourlyWeather: widget.data.hourly[index]);
                                   },
