@@ -7,7 +7,7 @@ A new Flutter project to provide weather updates.
 This project is a starting point for a Flutter application that fetches and displays weather information.
 
 
-https://github.com/user-attachments/assets/4a43ae1d-40be-449b-a006-79ceff8e6da8
+[https://github.com/user-attachments/assets/4a43ae1d-40be-449b-a006-79ceff8e6da8](https://youtube.com/shorts/8rBB5lKX5N4?si=3-39CwnDEndo1DHk)
 
 
 ### Prerequisites
