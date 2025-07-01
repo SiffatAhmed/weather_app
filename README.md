@@ -6,6 +6,10 @@ A new Flutter project to provide weather updates.
 
 This project is a starting point for a Flutter application that fetches and displays weather information.
 
+
+https://github.com/user-attachments/assets/4a43ae1d-40be-449b-a006-79ceff8e6da8
+
+
 ### Prerequisites
 
 - Flutter SDK: [Install Flutter](https://flutter.dev/docs/get-started/install)
