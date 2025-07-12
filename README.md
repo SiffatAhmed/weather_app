@@ -6,10 +6,7 @@ A new Flutter project to provide weather updates.
 
 This project is a starting point for a Flutter application that fetches and displays weather information.
 
-
 [![Watch the video](https://img.youtube.com/vi/8rBB5lKX5N4/hqdefault.jpg)](https://youtube.com/shorts/8rBB5lKX5N4?si=3-39CwnDEndo1DHk)
-
-
 
 ### Prerequisites
 
@@ -20,7 +17,7 @@ This project is a starting point for a Flutter application that fetches and disp
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/weather_app.git
+   git clone https://github.com/SiffatAhmed/weather_app.git
    ```
 2. Navigate to the project directory:
    ```sh
